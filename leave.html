@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Application - Girivar Bhawan</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stls.css">
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="navbar-container">
+            <h1 class="logo">Girivar Bhawan</h1>
+            <ul class="nav-links">
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/leave.html">Leave</a></li>
+            </ul>
+            <div id="nav-auth-slot"></div>
+        </div>
+    </nav>
+
+    
+    <section class="leave-section">
+        <div class="leave-container">
+            
+            <div id="not-logged-in" style="display:none; text-align:center; padding: 2rem;">
+                <p style="font-size: 1.2rem; color: #e74c3c; margin-bottom: 1rem;">&#9888; You must be logged in to submit a leave application.</p>
+                <a href="/signup.html" class="btn-leave-submit" style="text-decoration:none; padding: 0.8rem 2rem; display:inline-block;">Login / Sign Up</a>
+            </div>
+
+            <h2>Leave Application Form</h2>
+            <p class="form-instruction">Please fill in all the required fields to submit your leave request.</p>
+
+            <form class="leave-form" id="leaveForm" onsubmit="submitLeave(event)">
+                <div class="form-group-leave">
+                    <label for="lname">Student Name: <span class="required">*</span></label>
+                    <input type="text" id="lname" name="lname" required>
+                </div>
+
+                <div class="form-group-leave">
+                    <label for="lroll">Roll Number: <span class="required">*</span></label>
+                    <input type="text" id="lroll" name="lroll" required>
+                </div>
+
+                <div class="form-group-leave">
+                    <label for="lemail">Email: <span class="required">*</span></label>
+                    <input type="email" id="lemail" name="lemail" required>
+                </div>
+
+                <div class="form-group-leave">
+                    <label for="lphone">Phone Number: <span class="required">*</span></label>
+                    <input type="tel" id="lphone" name="lphone" required>
+                </div>
+
+                <div class="form-group-leave">
+                    <label for="lroom">Room Number: <span class="required">*</span></label>
+                    <input type="text" id="lroom" name="lroom" required>
+                </div>
+
+                <div class="form-group-leave">
+                    <label for="lstartdate">Start Date: <span class="required">*</span></label>
+                    <input type="date" id="lstartdate" name="lstartdate" required>
+                </div>
+
+                <div class="form-group-leave">
+                    <label for="lenddate">End Date: <span class="required">*</span></label>
+                    <input type="date" id="lenddate" name="lenddate" required>
+                </div>
+
+                <div class="form-group-leave">
+                    <label for="lleave">Leave Type: <span class="required">*</span></label>
+                    <select id="lleave" name="lleave" required></select>
+                </div>
+
+                <div class="form-group-leave">
+                    <label for="parents">Parents/Guardian Contact: <span class="required">*</span></label>
+                    <input type="tel" id="parents" name="parents" required>
+                </div>
+
+                <div class="form-group-leave">
+                    <label for="lreason">Reason for Leave: <span class="required">*</span></label>
+                    <textarea id="lreason" name="lreason" rows="4" required placeholder="Please provide detailed reason for your leave..."></textarea>
+                </div>
+
+                <div class="form-group-leave">
+                    <label for="ldestination">Destination/Address during leave: <span class="required">*</span></label>
+                    <textarea id="ldestination" name="ldestination" rows="3" required placeholder="Where will you be staying during your leave..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-leave-submit">Submit Leave Request</button>
+                    <button type="reset" class="btn-leave-reset">Clear Form</button>
+                </div>
+            </form>
+
+            <p id="leaveMessage" class="leave-message"></p>
+        </div>
+
+        
+        <div class="leave-container" style="margin-top: 2rem;">
+            <h3>Leave Policy</h3>
+            <ul class="policy-list">
+                <li><strong>Medical Leave:</strong> Valid medical certificate required from government hospital.</li>
+                <li><strong>Emergency Leave:</strong> Must be approved by Hostel Warden within 24 hours.</li>
+                <li><strong>Casual Leave:</strong> Maximum 5 days per semester without reason. Notice required.</li>
+                <li><strong>Vacation:</strong> During official holidays and semester breaks. No permission required.</li>
+                <li><strong>Application Deadline:</strong> Submit leave request at least 2 days before departure.</li>
+                <li><strong>Approval Time:</strong> Usually approved within 24-48 hours.</li>
+            </ul>
+        </div>
+    </section>
+
+    
+    <footer class="footer">
+        <p>&copy; 2024 Girivar Bhawan, NIT Kurukshetra. All rights reserved.</p>
+        <p>Contact: akshitgoyal0000@gmail.com | Phone: +91 6280464346</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        // Check if user is logged in before allowing access to leave form
+        window.addEventListener('load', () => {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                // Hide the form and heading, show inline message
+                document.getElementById('leaveForm').style.display = 'none';
+                document.querySelector('.form-instruction').style.display = 'none';
+                document.querySelector('.leave-container h2').style.display = 'none';
+                document.getElementById('not-logged-in').style.display = 'block';
+            } else {
+                // Pre-fill fields with logged-in user data
+                const user = JSON.parse(currentUser);
+                const nameEl = document.getElementById('lname');
+                const rollEl = document.getElementById('lroll');
+                const emailEl = document.getElementById('lemail');
+
+                if(nameEl && user.name) nameEl.value = user.name;
+                if(rollEl && user.rollNumber) rollEl.value = user.rollNumber;
+                if(emailEl && user.email) emailEl.value = user.email;
+            }
+        });
+
+        function submitLeave(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('lname').value;
+            const roll = document.getElementById('lroll').value;
+            const email = document.getElementById('lemail').value;
+            const phone = document.getElementById('lphone').value;
+            const room = document.getElementById('lroom').value;
+            const startDate = document.getElementById('lstartdate').value;
+            const endDate = document.getElementById('lenddate').value;
+            const leaveType = document.getElementById('lleave').value;
+            const parents = document.getElementById('parents').value;
+            const reason = document.getElementById('lreason').value;
+            const destination = document.getElementById('ldestination').value;
+
+            // Validation: Check if end date is after start date
+            if (new Date(endDate) <= new Date(startDate)) {
+                showLeaveMessage('End date must be after start date!', 'error');
+                return;
+            }
+
+            // Validation: Check if dates are in future
+            if (new Date(startDate) < new Date()) {
+                showLeaveMessage('Start date cannot be in the past!', 'error');
+                return;
+            }
+
+            // Create leave application object
+            const leaveApplication = {
+                name: name,
+                rollNumber: roll,
+                email: email,
+                phone: phone,
+                room: room,
+                startDate: startDate,
+                endDate: endDate,
+                leaveType: leaveType,
+                parents: parents,
+                reason: reason,
+                destination: destination,
+                status: 'Pending',
+                submittedAt: new Date().toLocaleString(),
+                applicationId: 'LV' + Math.ceil(Math.random() * 100000)
+            };
+
+            // Store in localStorage
+            let applications = JSON.parse(localStorage.getItem('leaveApplications')) || [];
+            applications.push(leaveApplication);
+            localStorage.setItem('leaveApplications', JSON.stringify(applications));
+
+            // Show success message with application ID
+            showLeaveMessage('Leave application submitted successfully! Application ID: ' + leaveApplication.applicationId, 'success');
+
+            // Reset form
+            document.getElementById('leaveForm').reset();
+        }
+
+        function showLeaveMessage(message, type) {
+            const messageEl = document.getElementById('leaveMessage');
+            messageEl.textContent = message;
+            messageEl.className = 'leave-message ' + type;
+
+            setTimeout(() => {
+                messageEl.textContent = '';
+                messageEl.className = 'leave-message';
+            }, 6000);
+        }
+    </script>
+</body>
+</html>
