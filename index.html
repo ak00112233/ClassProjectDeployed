@@ -3,176 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Girivar Bhawan - Hostel 7</title>
+    <title>Girivar Bhawan - Hostel 7 | NIT Kurukshetra</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     
-    <nav class="navbar">
+    <nav class="navbar pill-nav">
         <div class="navbar-container">
-            <h1 class="logo">Girivar Bhawan</h1>
+            <h1 class="logo">Hostel 7</h1>
             <ul class="nav-links">
                 <li><a href="#home" onclick="scrollTo('home')">Home</a></li>
                 <li><a href="#about" onclick="scrollTo('about')">About</a></li>
-                <li><a href="#facilities" onclick="scrollTo('facilities')">Facilities</a></li>
-                <li><a href="#fees" onclick="scrollTo('fees')">Fees</a></li>
-                <li><a href="#location" onclick="scrollTo('location')">Location</a></li>
-                <li><a href="/leave.html">Leave</a></li>
+                <li><a href="#facilities" onclick="scrollTo('facilities')">Services</a></li>
+                <li><a href="leave.html">Leave</a></li>
             </ul>
             <div id="nav-auth-slot"></div>
         </div>
     </nav>
 
-    
-    <section id="hero" class="section hero-section">
-        <div class="hero-img-wrapper">
+    <main class="app-container">
+        
+        <section id="hero" class="hero-split">
+            <div class="hero-content">
+                <span class="badge">ESTD. 1963</span>
+                <h2>Welcome to Girivar Bhawan</h2>
+                <p>Providing a home away from home for the scholars of NIT Kurukshetra. Experience comfort, community, and excellence.</p>
+                <div class="hero-cta">
+                    <a href="#about" class="btn-primary">Explore Hostel</a>
+                    <a href="leave.html" class="btn-secondary">Leave Portal</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-img-wrapper">
+                    <a href="#location" class="hero-icon" id="hero-map-pin" title="View Location">
+                        <img src="map-pin.svg" alt="Location" width="24" height="24">
+                    </a>
+                    <img src="image.png" alt="Girivar Bhawan Hero Image" id="heroImg" usemap="#hostel-map">
+                    <map name="hostel-map" id="hostelMap">
+                        <area shape="rect" data-coords="530,100,778,453" coords="530,100,778,453" href="leave.html" alt="Entrance" title="Entrance: Click to Apply for Leave">
+                        <area shape="rect" data-coords="0,0,530,453" coords="0,0,530,453" href="#about" alt="Building" title="Building: Click to know About Us">
+                    </map>
+                </div>
+            </div>
+        </section>
+
+        <div class="dashboard-grid">
             
-            <a href="#location" class="hero-icon" id="hero-map-pin" title="View Location">
-                <img src="map-pin.svg" alt="Location" width="32" height="32">
-            </a>
-            <a href="#footer" class="hero-icon" id="hero-tel-icon" title="Contact Us">
-                <img src="tel-icon.svg" alt="Contact" width="32" height="32">
-            </a>
+            <div class="grid-main">
+                <section id="about" class="glass-section">
+                    <h2>The Legacy</h2>
+                    <p>Girivar Bhawan (Hostel 7) stands as one of the oldest and most prestigious residential wings of NIT Kurukshetra. With a capacity of 352 rooms, it houses a vibrant community of future engineers.</p>
+                    <div class="stats-row">
+                        <div class="stat-item"><strong>352</strong><span>Rooms</span></div>
+                        <div class="stat-item"><strong>24/7</strong><span>Security</span></div>
+                        <div class="stat-item"><strong>High</strong><span>WiFi Speed</span></div>
+                    </div>
+                </section>
+
+                <section id="facilities" class="glass-section">
+                    <h2>Infrastructure</h2>
+                    <div id="facilities-container" class="compact-facilities"></div>
+                </section>
+
+                <section id="fees" class="glass-section">
+                    <h2>Financials</h2>
+                    <div class="table-wrapper">
+                        <table class="fees-table">
+                            <thead>
+                                <tr><th>Component</th><th>Fee (₹)</th><th>Period</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Hostel Rent</td><td>10,000</td><td>Semester</td></tr>
+                                <tr><td>Mess Advance</td><td>30,000</td><td>Semester</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
 
             
-            <img src="image.png" alt="Hostel Hero Image"
-                 id="heroImg"
-                 usemap="#hostel-map">
+            <aside class="grid-sidebar">
+                <section class="glass-section rules-card">
+                    <h3>Hostel Code</h3>
+                    <ul class="rules-list"></ul>
+                </section>
 
-            <map name="hostel-map" id="hostelMap">
-                
-                <area shape="rect"
-                      data-coords="335,260,480,420"
-                      coords="335,260,480,420"
-                      href="/leave.html"
-                      alt="Entrance - Apply for Leave"
-                      title="Entrance: Click to Apply for Leave">
+                <section id="feedback" class="glass-section feedback-card">
+                    <h3>Contact Warden</h3>
+                    <form class="feedback-form" onsubmit="submitFeedback(event)">
+                        <input type="text" id="fname" placeholder="Full Name" required>
+                        <input type="email" id="email" placeholder="Email" required>
+                        <input type="text" id="roll" placeholder="Roll Number" required>
+                        <textarea id="feedback" placeholder="Your Message..." rows="3" required></textarea>
+                        <button type="submit" class="btn-submit">Send Message</button>
+                    </form>
+                    <p id="feedback-message" class="feedback-message"></p>
+                </section>
 
-                
-                <area shape="rect"
-                      data-coords="50,10,670,260"
-                      coords="50,10,670,260"
-                      href="#about"
-                      alt="Building - About Girivar Bhawan"
-                      title="Building: Click to know About Us">
-            </map>
+                <section id="location" class="glass-section location-mini">
+                    <h3>Location</h3>
+                    <div class="map-mini">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3435.67!2d76.80!3d29.96!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDU4JzA0LjgiTiA3NsKwNDgnMTEuMiJF!5e0!3m2!1sen!2sin!4v1234567890" width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </section>
+            </aside>
         </div>
-    </section>
+    </main>
 
-    
-    <section id="about" class="section">
-        <h2>About Girivar Bhawan</h2>
-        <p>
-            Girivar Bhawan (Hostel 7) is one of the premier boys' hostels at NIT Kurukshetra. 
-            It provides a comfortable and conducive environment for students to pursue their academic 
-            and personal development. With world-class facilities and a vibrant community, 
-            Girivar Bhawan is home to 352 students.
-        </p>
-        <div class="about-grid">
-            <div class="about-card">
-                <h3>Founded</h3>
-                <p>2010</p>
-            </div>
-            <div class="about-card">
-                <h3>Capacity</h3>
-                <p>352 Single Rooms</p>
-            </div>
-            <div class="about-card">
-                <h3>Hostel Type</h3>
-                <p>Boys' Hostel</p>
-            </div>
-        </div>
-    </section>
-
-    
-    <section id="facilities" class="section">
-        <h2>Facilities &amp; Amenities</h2>
-        <div id="facilities-container" class="facilities-grid"></div>
-    </section>
-
-    
-    <section class="section">
-        <h2>Hostel Rules</h2>
-        <ol class="rules-list"></ol>
-    </section>
-
-    
-    <section id="fees" class="section">
-        <h2>Fee Structure</h2>
-        <table class="fees-table">
-            <thead>
-                <tr>
-                    <th>Fee Component</th>
-                    <th>Amount (₹)</th>
-                    <th>Billing Cycle</th>
-                    <th>Details</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Room Rent (Single Room)</td>
-                    <td>10,000</td>
-                    <td>Per Semester</td>
-                    <td>Submitted with college fees</td>
-                </tr>
-                <tr>
-                    <td>Mess Charges</td>
-                    <td>34,500</td>
-                    <td>Per Semester</td>
-                    <td>Includes daily meals</td>
-                </tr>
-                <tr>
-                    <td>Appliance Charge</td>
-                    <td>800</td>
-                    <td>Per Month</td>
-                    <td>Additional if cooler or other electric appliances are used</td>
-                </tr>
-            </tbody>
-        </table>
-        <p class="fee-note"><strong>Note:</strong> Hostel offers single rooms only.</p>
-    </section>
-
-    
-    <section id="location" class="section">
-        <h2>Hostel Location</h2>
-        <p>Find us at NIT Kurukshetra, Haryana, India</p>
-        <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3435.6749999999997!2d76.80316!3d29.96807!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d8e0d0000001%3A0xd500b000000!2sNIT%20Kurukshetra!5e0!3m2!1sen!2sin!4v1234567890" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-        <p><strong>Address:</strong> Girivar Bhawan, NIT Kurukshetra, Kurukshetra, Haryana 136119, India</p>
-    </section>
-
-    
-    <section class="section feedback-section">
-        <h2>Send us your Feedback</h2>
-        <form class="feedback-form" onsubmit="submitFeedback(event)">
-            <div class="form-group">
-                <label for="fname">Name:</label>
-                <input type="text" id="fname" name="fname" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="roll">Roll Number:</label>
-                <input type="text" id="roll" name="roll" required>
-            </div>
-            <div class="form-group">
-                <label for="feedback">Feedback:</label>
-                <textarea id="feedback" name="feedback" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn-submit">Submit Feedback</button>
-        </form>
-        <p id="feedback-message" class="feedback-message"></p>
-    </section>
-
-    
-    <footer class="footer" id="footer">
-        <p>&copy; 2024 Girivar Bhawan, NIT Kurukshetra. All rights reserved.</p>
-        <p>Contact: akshitgoyal0000@gmail.com | Phone: +91 6280464346</p>
+    <footer class="footer">
+        <p>&copy; 2024 Girivar Bhawan, NIT Kurukshetra. <a href="#hero">Back to Top</a></p>
+        <p>akshitgoyal0000@gmail.com | +91 6280464346</p>
     </footer>
 
     <script src="scripts.js"></script>
 </body>
 </html>
+
+

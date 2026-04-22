@@ -71,7 +71,15 @@ window.addEventListener('load', () => {
     generateRules();
     generateLeaveTypes();
     setupNavAuth();
-    resizeImageMap();
+    
+    const heroImg = document.getElementById('heroImg');
+    if (heroImg) {
+        if (heroImg.complete) {
+            resizeImageMap();
+        } else {
+            heroImg.addEventListener('load', resizeImageMap);
+        }
+    }
 });
 
 window.addEventListener('resize', resizeImageMap);
@@ -197,3 +205,5 @@ function showMessage(message, type) {
         messageEl.className = 'feedback-message';
     }, 5000);
 }
+
+

@@ -81,3 +81,5 @@ function showLeaveMessage(message, type) {
         messageEl.className = 'leave-message';
     }, 6000);
 }
+
+

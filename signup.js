@@ -134,7 +134,6 @@ function loadFormData() {
 }
 
 window.addEventListener('load', () => {
-    // Hide signup panel initially via class (no inline style needed)
     document.getElementById('signupContainer').classList.add('hidden');
 
     const currentUser = localStorage.getItem('currentUser');
@@ -151,3 +150,5 @@ window.addEventListener('load', () => {
         input.addEventListener('input', saveFormData);
     });
 });
+
+
