@@ -121,8 +121,10 @@ function setupNavAuth() {
             <div class="nav-avatar-wrapper">
                 <div class="nav-avatar" id="navAvatar">${firstLetter}</div>
                 <div class="nav-dropdown" id="navDropdown">
-                    <p class="nav-dropdown-username">${user.username || user.name}</p>
-                    <button class="nav-logout-btn" onclick="logoutUser()">Logout</button>
+                    <div class="nav-dropdown-inner">
+                        <p class="nav-dropdown-username">${user.username || user.name}</p>
+                        <button class="nav-logout-btn" onclick="logoutUser()">Logout</button>
+                    </div>
                 </div>
             </div>
         `;
@@ -133,7 +135,7 @@ function setupNavAuth() {
 
 function logoutUser() {
     localStorage.removeItem('currentUser');
-    window.location.href = 'signup.html';
+    window.location.href = '/signup.html';
 }
 
 function scrollTo(sectionId) {
