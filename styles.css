@@ -114,7 +114,7 @@ a {
 .nav-dropdown-inner {
     background-color: white;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     padding: 0.8rem;
 }
 
@@ -269,6 +269,14 @@ a {
     padding: 0;
 }
 
+#heroImg {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+    cursor: crosshair;
+}
+
 .hero-img-wrapper {
     position: relative;
     display: block;
@@ -283,7 +291,7 @@ a {
     background-color: white;
     border-radius: 50%;
     padding: 5px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     transition: transform 0.2s, box-shadow 0.2s;
     display: inline-flex;
     align-items: center;
@@ -292,7 +300,7 @@ a {
 
 .hero-icon:hover {
     transform: scale(1.15);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
 #hero-map-pin {

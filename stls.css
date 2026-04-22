@@ -1,3 +1,42 @@
+/* ── Utility ── */
+.hidden {
+    display: none !important;
+}
+
+/* ── Not-logged-in block (leave page) ── */
+#not-logged-in {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+}
+
+.not-logged-in-text {
+    font-size: 1.2rem;
+    color: #e74c3c;
+    margin-bottom: 1rem;
+}
+
+/* Anchor styled as the submit button (used in #not-logged-in) */
+.btn-leave-link {
+    display: inline-block;
+    text-decoration: none;
+    padding: 0.8rem 2rem;
+    flex: none;
+}
+
+/* Policy container spacing */
+.leave-container--policy {
+    margin-top: 2rem;
+}
+
+/* ── Toggle link text (signup/login switch) ── */
+.link-text {
+    color: #3498db;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* ─────────────────────────────────────────── */
 .auth-section {
     max-width: 1200px;
     margin: 2rem auto;

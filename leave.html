@@ -24,9 +24,9 @@
     <section class="leave-section">
         <div class="leave-container">
             
-            <div id="not-logged-in" style="display:none; text-align:center; padding: 2rem;">
-                <p style="font-size: 1.2rem; color: #e74c3c; margin-bottom: 1rem;">&#9888; You must be logged in to submit a leave application.</p>
-                <a href="/signup.html" class="btn-leave-submit" style="text-decoration:none; padding: 0.8rem 2rem; display:inline-block;">Login / Sign Up</a>
+            <div id="not-logged-in">
+                <p class="not-logged-in-text">&#9888; You must be logged in to submit a leave application.</p>
+                <a href="/signup.html" class="btn-leave-submit btn-leave-link">Login / Sign Up</a>
             </div>
 
             <h2>Leave Application Form</h2>
@@ -98,7 +98,7 @@
         </div>
 
         
-        <div class="leave-container" style="margin-top: 2rem;">
+        <div class="leave-container leave-container--policy">
             <h3>Leave Policy</h3>
             <ul class="policy-list">
                 <li><strong>Medical Leave:</strong> Valid medical certificate required from government hospital.</li>
@@ -118,96 +118,6 @@
     </footer>
 
     <script src="scripts.js"></script>
-    <script>
-        // Check if user is logged in before allowing access to leave form
-        window.addEventListener('load', () => {
-            const currentUser = localStorage.getItem('currentUser');
-            if (!currentUser) {
-                // Hide the form and heading, show inline message
-                document.getElementById('leaveForm').style.display = 'none';
-                document.querySelector('.form-instruction').style.display = 'none';
-                document.querySelector('.leave-container h2').style.display = 'none';
-                document.getElementById('not-logged-in').style.display = 'block';
-            } else {
-                // Pre-fill fields with logged-in user data
-                const user = JSON.parse(currentUser);
-                const nameEl = document.getElementById('lname');
-                const rollEl = document.getElementById('lroll');
-                const emailEl = document.getElementById('lemail');
-
-                if(nameEl && user.name) nameEl.value = user.name;
-                if(rollEl && user.rollNumber) rollEl.value = user.rollNumber;
-                if(emailEl && user.email) emailEl.value = user.email;
-            }
-        });
-
-        function submitLeave(event) {
-            event.preventDefault();
-
-            const name = document.getElementById('lname').value;
-            const roll = document.getElementById('lroll').value;
-            const email = document.getElementById('lemail').value;
-            const phone = document.getElementById('lphone').value;
-            const room = document.getElementById('lroom').value;
-            const startDate = document.getElementById('lstartdate').value;
-            const endDate = document.getElementById('lenddate').value;
-            const leaveType = document.getElementById('lleave').value;
-            const parents = document.getElementById('parents').value;
-            const reason = document.getElementById('lreason').value;
-            const destination = document.getElementById('ldestination').value;
-
-            // Validation: Check if end date is after start date
-            if (new Date(endDate) <= new Date(startDate)) {
-                showLeaveMessage('End date must be after start date!', 'error');
-                return;
-            }
-
-            // Validation: Check if dates are in future
-            if (new Date(startDate) < new Date()) {
-                showLeaveMessage('Start date cannot be in the past!', 'error');
-                return;
-            }
-
-            // Create leave application object
-            const leaveApplication = {
-                name: name,
-                rollNumber: roll,
-                email: email,
-                phone: phone,
-                room: room,
-                startDate: startDate,
-                endDate: endDate,
-                leaveType: leaveType,
-                parents: parents,
-                reason: reason,
-                destination: destination,
-                status: 'Pending',
-                submittedAt: new Date().toLocaleString(),
-                applicationId: 'LV' + Math.ceil(Math.random() * 100000)
-            };
-
-            // Store in localStorage
-            let applications = JSON.parse(localStorage.getItem('leaveApplications')) || [];
-            applications.push(leaveApplication);
-            localStorage.setItem('leaveApplications', JSON.stringify(applications));
-
-            // Show success message with application ID
-            showLeaveMessage('Leave application submitted successfully! Application ID: ' + leaveApplication.applicationId, 'success');
-
-            // Reset form
-            document.getElementById('leaveForm').reset();
-        }
-
-        function showLeaveMessage(message, type) {
-            const messageEl = document.getElementById('leaveMessage');
-            messageEl.textContent = message;
-            messageEl.className = 'leave-message ' + type;
-
-            setTimeout(() => {
-                messageEl.textContent = '';
-                messageEl.className = 'leave-message';
-            }, 6000);
-        }
-    </script>
+    <script src="leave.js"></script>
 </body>
 </html>

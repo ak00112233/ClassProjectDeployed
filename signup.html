@@ -25,7 +25,6 @@
         <div class="auth-container">
             <h2>Student Login</h2>
             
-            
             <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
                 <div class="form-group-auth">
                     <label for="username">Roll Number / Username:</label>
@@ -50,12 +49,12 @@
 
             
             <p class="toggle-auth" onclick="toggleForm()">
-                Don't have an account? <span style="color: #3498db; cursor: pointer; font-weight: bold;">Sign Up</span>
+                Don't have an account? <span class="link-text">Sign Up</span>
             </p>
         </div>
 
         
-        <div class="auth-container" id="signupContainer" style="display: none;">
+        <div class="auth-container" id="signupContainer">
             <h2>Create Account</h2>
 
             <form class="auth-form" id="signupForm" onsubmit="handleSignup(event)">
@@ -102,7 +101,7 @@
 
             
             <p class="toggle-auth" onclick="toggleForm()">
-                Already have an account? <span style="color: #3498db; cursor: pointer; font-weight: bold;">Login</span>
+                Already have an account? <span class="link-text">Login</span>
             </p>
         </div>
     </section>
@@ -114,177 +113,6 @@
     </footer>
 
     <script src="scripts.js"></script>
-    <script>
-        // Toggle between login and signup forms
-        function toggleForm() {
-            const loginForm = document.getElementById('loginForm').parentElement;
-            const signupContainer = document.getElementById('signupContainer');
-
-            loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
-            signupContainer.style.display = signupContainer.style.display === 'none' ? 'block' : 'none';
-        }
-
-        let loginCaptchaExpected = 0;
-        let signupCaptchaExpected = 0;
-
-        function generateCaptcha(type) {
-            const num1 = Math.floor(Math.random() * 10) + 1;
-            const num2 = Math.floor(Math.random() * 10) + 1;
-            const sum = num1 + num2;
-            if (type === 'login') {
-                loginCaptchaExpected = sum;
-                document.getElementById('loginCaptchaQuestion').innerText = `What is ${num1} + ${num2}?`;
-            } else {
-                signupCaptchaExpected = sum;
-                document.getElementById('signupCaptchaQuestion').innerText = `What is ${num1} + ${num2}?`;
-            }
-        }
-
-        // Handle login
-        function handleLogin(event) {
-            event.preventDefault();
-
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const captchaAnswer = parseInt(document.getElementById('loginCaptchaAnswer').value);
-
-            if (captchaAnswer !== loginCaptchaExpected) {
-                showAuthMessage('Incorrect Captcha!', 'error', 'loginMessage');
-                generateCaptcha('login'); // Regenerate on failure
-                return;
-            }
-
-            // Get stored users from localStorage
-            let users = JSON.parse(localStorage.getItem('users')) || [];
-
-            // Check if user exists and password matches
-            const user = users.find(u => u.username === username);
-
-            if (user && user.password === password) {
-                // Login successful
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                sessionStorage.removeItem('loginFormData');
-                showAuthMessage('Login successful! Redirecting...', 'success', 'loginMessage');
-                setTimeout(() => {
-                    window.location.href = '/index.html';
-                }, 2000);
-            } else if (user && user.password !== password) {
-                showAuthMessage('Invalid password!', 'error', 'loginMessage');
-            } else {
-                showAuthMessage('User not found! Please sign up first.', 'error', 'loginMessage');
-            }
-        }
-
-        // Handle signup
-        function handleSignup(event) {
-            event.preventDefault();
-
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const roll = document.getElementById('signupRoll').value;
-            const username = document.getElementById('signupUsername').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('signupConfirmPassword').value;
-            const captchaAnswer = parseInt(document.getElementById('signupCaptchaAnswer').value);
-
-            if (captchaAnswer !== signupCaptchaExpected) {
-                showAuthMessage('Incorrect Captcha!', 'error', 'signupMessage');
-                generateCaptcha('signup'); // Regenerate on failure
-                return;
-            }
-
-            // Validation
-            if (password !== confirmPassword) {
-                showAuthMessage('Passwords do not match!', 'error', 'signupMessage');
-                return;
-            }
-
-            if (password.length < 4) {
-                showAuthMessage('Password should be at least 4 characters!', 'error', 'signupMessage');
-                return;
-            }
-
-            // Get existing users
-            let users = JSON.parse(localStorage.getItem('users')) || [];
-
-            // Check if username already exists
-            if (users.find(u => u.username === username)) {
-                showAuthMessage('Username already exists!', 'error', 'signupMessage');
-                return;
-            }
-
-            // Add new user
-            const newUser = {
-                name: name,
-                email: email,
-                rollNumber: roll,
-                username: username,
-                password: password,
-                createdAt: new Date().toLocaleString()
-            };
-
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
-
-            sessionStorage.removeItem('signupFormData');
-            showAuthMessage('Account created successfully! You can now login.', 'success', 'signupMessage');
-
-            // Reset form and switch to login
-            setTimeout(() => {
-                document.getElementById('signupForm').reset();
-                generateCaptcha('login');
-                toggleForm();
-            }, 2000);
-        }
-
-        function showAuthMessage(message, type, elementId) {
-            const messageEl = document.getElementById(elementId);
-            messageEl.textContent = message;
-            messageEl.className = 'auth-message ' + type;
-        }
-
-        function saveFormData() {
-            const inputs = document.querySelectorAll('input, select');
-            const formData = {};
-            inputs.forEach(input => {
-                if (input.type !== 'password' && !input.id.includes('Captcha')) {
-                    formData[input.id] = input.value;
-                }
-            });
-            sessionStorage.setItem('authFormData', JSON.stringify(formData));
-        }
-
-        function loadFormData() {
-            const storedData = sessionStorage.getItem('authFormData');
-            if (storedData) {
-                const formData = JSON.parse(storedData);
-                for (const key in formData) {
-                    const el = document.getElementById(key);
-                    if (el) el.value = formData[key];
-                }
-            }
-        }
-
-        // Check if user is already logged in and initialize form persistence
-        window.addEventListener('load', () => {
-            const currentUser = localStorage.getItem('currentUser');
-            if (currentUser) {
-                showAuthMessage('You are already logged in. Redirecting to home...', 'success', 'loginMessage');
-                setTimeout(() => {
-                    window.location.href = '/index.html';
-                }, 2000);
-            }
-
-            generateCaptcha('login');
-            generateCaptcha('signup');
-
-            loadFormData();
-
-            const inputs = document.querySelectorAll('input, select');
-            inputs.forEach(input => {
-                input.addEventListener('input', saveFormData);
-            });
-        });
-    </script>
+    <script src="signup.js"></script>
 </body>
 </html>
